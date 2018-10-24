@@ -87,7 +87,8 @@ if (navigator.geolocation) {
 		currentPosition = position;
 		latitude = currentPosition.coords.latitude;
         longitude = currentPosition.coords.longitude;
-        var proxy = 'https://cors-anywhere.herokuapp.com/';
+	   // var proxy = 'https://cors-anywhere.herokuapp.com/';
+	    var proxy = 'https://cors.io/?';
         var apiKey = "530de0ed2ee426d55a42c30ae338d895";
         
         fetch(proxy+"https://api.darksky.net/forecast/"+ apiKey+"/"+ latitude+","+ longitude)
@@ -180,6 +181,9 @@ function setIcon(summary){
     }
     else if(summary.trim()==="Partly Cloudy"){
         imgIcon.src="img/svg/wi-cloudy.svg";
+	}
+	else if(summary.trim()==="Rain"){
+        imgIcon.src="img/svg/wi-rain.svg";
     }
     
 }
