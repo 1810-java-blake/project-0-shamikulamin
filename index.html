@@ -3,12 +3,56 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>TEST</title>
+    <title>Weather App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
     <script src="main.js"></script>
 </head>
 <body>
-    
+    <div class="main">
+		<div class="container">
+			<div class="app twelve columns">
+				<h1 class="headline">Weather Forecast <span class="location"></span></h1>
+				
+				<div class="row">
+					<div class="eight columns offset-by-two">
+						<div class="weather-info">
+							<div class="weather-info-animation">
+							<canvas id="animated-icon" width="220" height="220"></canvas>
+						</div>
+					</div>		
+                </div>
+                <!-- <object id="weathObj" data="img/svg/wi-time-1.svg" type="image/svg+xml" width="350" height="350"></object> -->
+                <img id="weathObj" src="img/svg/wi-time-1.svg" width="350" length="350">
+				<div class="row">
+					<div class="eight columns offset-by-two">
+						<div class="weather-info-text">
+							<div class="one-third column">
+								<span id="local-time">~~:~~</span>
+							</div>
+							<div class="one-third column">
+								<div class="temperature">
+									<span id="temp-fahrenheit hidden">°F</span>
+								</div> 
+							</div>
+							<div class="one-third column">
+								<span id="weather-condition">~~~</span>
+							</div>							
+						</div>
+					</div>
+				</div>					
+						
+				<div class="row">
+					<div class="search-weather eight columns offset-by-two">
+						<h3>Find a Forecast</h3>
+						<form id="my-form" action="javascript:subBut()">
+							<input type="search" placeholder="Search for a city or zipcode" id="find-forcast">
+							<button id="btn-search">Search</button>
+						</form>
+					</div>
+				</div>			
+			</div>  <!-- app -->
+		</div> <!-- container -->
+	</div> <!-- main -->
 </body>
 </html>
