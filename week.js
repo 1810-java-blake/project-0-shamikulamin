@@ -1,7 +1,7 @@
 let weathData;
 let locData;
 let count = 0;
-let endCount = count +5;
+let endCount = count+5;
 
 
 let searchInput = localStorage.getItem("searchParam");
@@ -28,8 +28,8 @@ function getWeather(data){
         console.log(weathDat);
         weathData = weathDat;
         let titleEd = document.getElementById("headline");
-        console.log("Hourly Forecast For: " + data[0].address.city +", "+ data[0].address.state);
-        titleEd.innerHTML = "Hourly Forecast For: " + data[0].address.city +", "+ data[0].address.state;  // Add day summary
+        console.log("Weekly Forecast For: " + data[0].address.city +", "+ data[0].address.state);
+        titleEd.innerHTML = "5-Day Forecast For: " + data[0].address.city +", "+ data[0].address.state;  // Add day summary
         populate();
         
 
@@ -39,7 +39,7 @@ function getWeather(data){
         let cond = document.getElementById("weather-condition");
         let time = document.getElementById("local-time");
         console.log(data);
-        temp.innerHTML=Math.trunc(data.currently.apparentTemperature)+"°F";
+        temp.innerHTML=Math.trunc(data.currently.apparenttemperatureHigh)+"°F";
         cond.innerHTML= data.currently.summary;
         setIcon(data.currently.summary);
         var d = new Date(data.currently.time*1000); // The 0 there is the key, which sets the date to the epoch
@@ -54,16 +54,18 @@ function populate(){
     let mainDiv= document.getElementById("transbox");
     for(count; count<endCount; count++){
         let div = document.createElement("div");
-        let hTime = document.createElement('h2');
+        let hDay = document.createElement('h2');
+        let hDate = document.createElement("h1");
         let summary = document.createElement('h4');
         let precip = document.createElement('h4');
         let humid = document.createElement('h4');
-        let temperature = document.createElement('h1');
+        let temperatureHigh = document.createElement('h1');
+        let temperatureLow = document.createElement('h2');
         let imgIcon = document.createElement('img');
 
 
         div.style.width = "225px";
-        div.style.height = "550px";
+        div.style.height = "600px";
         div.style.marginRight = "50px";
         div.style.marginBottom = "50px";
         div.style.color = "white";
@@ -74,11 +76,27 @@ function populate(){
 
         mainDiv.parentNode.insertBefore(div,mainDiv.nextSibling);
 
-        let d = new Date(weathData.hourly.data[count].time *1000); 
+        let d = new Date(weathData.daily.data[count].time *1000); 
         let timeText = d.toLocaleTimeString([], {hour: '2-digit'});
-        hTime.style.textAlign="center";
-        div.appendChild(hTime);
-        hTime.innerHTML=timeText;
+
+        var timestamp = Number(new Date()) //1479895361931
+
+        var date = new Date(timestamp)
+
+        let str = d.toDateString();
+        let lastIndex = str.lastIndexOf(" ");
+        let finalDate = str.substring(0, lastIndex);
+
+        var words = finalDate.split(" ");
+
+        hDay.style.textAlign="center";
+        hDay.style.marginTop="-35px";
+        hDate.style.textAlign="center";
+        div.appendChild(hDate);
+        div.appendChild(hDay);
+        hDay.innerHTML=words[0];
+        hDate.innerHTML=words[1] + " "+ words[2];
+
         if(weathData.daily.data[count].icon.trim()==="partly-cloudy-day"){
             imgIcon.src="img/svg/wi-day-cloudy.svg";
         }
@@ -99,23 +117,30 @@ function populate(){
         }
 
         imgIcon.style.alignContent="center";
+        imgIcon.style.marginTop = "-30px";
         div.appendChild(imgIcon);
 
-        temperature.style.textAlign = "center";
-        div.appendChild(temperature);
-        temperature.innerHTML = Math.trunc(weathData.hourly.data[count].temperature)+"°F";
+        temperatureHigh.style.textAlign = "center";
+        temperatureHigh.style.marginTop = "-30px";
+        div.appendChild(temperatureHigh);
+        temperatureHigh.innerHTML ="High: " + Math.trunc(weathData.daily.data[count].temperatureHigh)+"°F";
+
+        temperatureLow.style.textAlign = "center";
+        temperatureLow.style.marginTop = "-30px";
+        div.appendChild(temperatureLow);
+        temperatureLow.innerHTML ="Low: " + Math.trunc(weathData.daily.data[count].temperatureLow)+"°F";
 
         summary.style.textAlign = "center";
         div.appendChild(summary);
-        summary.innerHTML = weathData.hourly.data[count].summary;
+        summary.innerHTML = weathData.daily.data[count].summary;
 
         precip.style.textAlign = "center";
         div.appendChild(precip);
-        precip.innerHTML ="Precipitation: " + weathData.hourly.data[count].precipProbability*100 +"%";
+        precip.innerHTML ="Precipitation: " + Math.trunc(weathData.daily.data[count].precipProbability*100) +"%";
 
         humid.style.textAlign = "center";
         div.appendChild(humid);
-        humid.innerHTML ="Humidity: " + weathData.hourly.data[count].humidity*100 +"%";
+        humid.innerHTML ="Humidity: " + Math.trunc(weathData.daily.data[count].humidity*100) +"%";
 
     }
     endCount = endCount + 5;

@@ -100,7 +100,7 @@ if (navigator.geolocation) {
             console.log(data);
             temp.innerHTML=Math.trunc(data.currently.apparentTemperature)+"°F";
             cond.innerHTML= data.currently.summary;
-            setIcon(data.currently.summary);
+            setIcon(data.currently.icon);
             var d = new Date(data.currently.time*1000); // The 0 there is the key, which sets the date to the epoch
             console.log(d.toLocaleTimeString());
             time.innerHTML = d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
@@ -176,15 +176,24 @@ else {
 }
 function setIcon(summary){
     let imgIcon = document.getElementById("weathObj");
-    if(summary.trim()==="Mostly Cloudy"){
-        imgIcon.src="img/svg/wi-day-cloudy-high.svg";
-    }
-    else if(summary.trim()==="Partly Cloudy"){
-        imgIcon.src="img/svg/wi-cloudy.svg";
+    if(summary.trim()==="partly-cloudy-day"){
+		imgIcon.src="img/svg/wi-day-cloudy.svg";
 	}
-	else if(summary.trim()==="Rain"){
-        imgIcon.src="img/svg/wi-rain.svg";
-    }
+	else if(summary.trim()==="partly-cloudy-night"){
+		imgIcon.src="img/svg/wi-night-cloudy.svg";
+	}
+	else if(summary.trim()==="clear-day"){
+		imgIcon.src="img/svg/wi-day-sunny.svg";
+	}
+	else if(summary.trim()==="wind"){
+		imgIcon.src="img/svg/wi-windy.svg";
+	}
+	else if(summary.trim()==="rain"){
+		imgIcon.src="img/svg/wi-rain.svg";
+	}
+	else if(summary.trim()==="cloudy"){
+		imgIcon.src="img/svg/wi-cloud.svg";
+	}
     
 }
 
