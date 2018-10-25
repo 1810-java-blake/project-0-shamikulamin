@@ -12,9 +12,9 @@ body {
 }
 
 #rectBox{
-    position: absolute;
-    height: 550px;
-    width: 425px;
+     position: absolute; 
+    height: 80%;
+    width: 20%;
     background-color:#141414;
     box-shadow: #141414;
     opacity: 0.4;
@@ -27,6 +27,7 @@ body {
 }
 
 #transbox{
+    display: block;
     margin: 0 auto;
   
 } 
@@ -34,13 +35,12 @@ body {
 .button,
 button {
   display: inline-block;
-  height: 38px;
-  padding: 0 30px;
+  height: 4%;
   color: #555555;
   text-align: center;
-  font-size: 11px;
+  font-size: 75%;
   font-weight: 600;
-  line-height: 38px;
+  line-height: 2%;
   letter-spacing: .1rem;
   text-transform: uppercase;
   text-decoration: none;
@@ -62,8 +62,8 @@ button:hover {
 }
 
 #weekBtn{
-    width: 375px;
-    position: absolute;
+    width: 18%;
+    position: absolute; 
     margin-left: 1%;
     z-index: 2;
     margin-top: 28%;

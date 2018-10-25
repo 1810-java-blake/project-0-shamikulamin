@@ -5,7 +5,18 @@ let endCount = count +5;
 
 
 let searchInput = localStorage.getItem("searchParam");
-let proxy = 'https://cors-anywhere.herokuapp.com/';
+
+var geocoder = new google.maps.Geocoder();
+
+geocoder.geocode({'address': searchInput}, function(results, status) {
+    if (status === 'OK') {
+        console.log(results[0]);
+        getWeather(results);
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+/*let proxy = 'https://cors-anywhere.herokuapp.com/';
 //let proxy = 'https://cors.io/?';
 fetch(proxy+"https://nominatim.openstreetmap.org/search?q="+searchInput+"&format=json&polygon=1&addressdetails=1")
 .then(res =>res.json())
@@ -15,21 +26,21 @@ fetch(proxy+"https://nominatim.openstreetmap.org/search?q="+searchInput+"&format
     getWeather(data);  
     
 })
-.catch(err => console.log(err));
+.catch(err => console.log(err));*/
 
 function getWeather(data){
-    let proxy = 'https://cors-anywhere.herokuapp.com/';
-    //let proxy = 'https://cors.io/?';
+    //let proxy = 'https://cors-anywhere.herokuapp.com/';
+    let proxy = 'https://cors.io/?';
     var apiKey = "530de0ed2ee426d55a42c30ae338d895";
     
-    fetch(proxy+"https://api.darksky.net/forecast/"+ apiKey+"/"+ data[0].lat+","+ data[0].lon)
+    fetch(proxy+"https://api.darksky.net/forecast/"+ apiKey+"/"+ data[0].geometry.location.lat()+","+ data[0].geometry.location.lng())
     .then(res =>res.json())
     .then(weathDat => {
         console.log(weathDat);
         weathData = weathDat;
         let titleEd = document.getElementById("headline");
-        console.log("Hourly Forecast For: " + data[0].address.city +", "+ data[0].address.state);
-        titleEd.innerHTML = "Hourly Forecast For: " + data[0].address.city +", "+ data[0].address.state;  // Add day summary
+      //  console.log("Hourly Forecast For: " + data[0].address.city +", "+ data[0].address.state);
+        titleEd.innerHTML = "Hourly Forecast For: " +  data[0].formatted_address;  // Add day summary
         populate();
         
 
@@ -62,15 +73,17 @@ function populate(){
         let imgIcon = document.createElement('img');
 
 
-        div.style.width = "225px";
-        div.style.height = "550px";
-        div.style.marginRight = "50px";
-        div.style.marginBottom = "50px";
+        div.style.width = "12%";
+        div.style.height = "24%";
+        div.style.marginRight = "2%";
+        div.style.marginBottom = "2%";
         div.style.color = "white";
         div.style.background = "background: #141414;";
         div.style.boxShadow = "0 0 15px 10px #141414";
         div.style.cssFloat = "right";
         div.style.opacity = "0.6";
+        div.style.position = "relative";
+        div.style.right = "5%";
 
         mainDiv.parentNode.insertBefore(div,mainDiv.nextSibling);
 
