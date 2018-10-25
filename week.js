@@ -29,7 +29,7 @@ function getWeather(data){
         weathData = weathDat;
         let titleEd = document.getElementById("headline");
       //  console.log("Weekly Forecast For: " + data[0].address.city +", "+ data[0].address.state);
-        titleEd.innerHTML = "5-Day Forecast For: " + data[0].formatted_address;  // Add day summary
+        titleEd.innerHTML = "7-Day Forecast For: " + data[0].formatted_address;  // Add day summary
         populate();
         
 
@@ -51,6 +51,23 @@ function getWeather(data){
 }
 
 function populate(){
+    let rect = document.getElementById("rectBox");
+    let summary = document.createElement("h2");
+    let summaryText = document.createElement("h3");
+    summary.style.textAlign = "center";
+    summaryText.style.textAlign = "center";
+    summary.innerHTML = "Weekly Summary";
+    summaryText.innerHTML = weathData.daily.summary;
+    let imgIcon = document.createElement("img");
+    
+    setImage(imgIcon, weathData.daily.icon);
+    imgIcon.style.width = "70%";
+    imgIcon.style.margin = "auto";
+    imgIcon.style.display = "block";
+    rect.appendChild(summary);
+    rect.appendChild(imgIcon);
+    rect.appendChild(summaryText);
+
     let mainDiv= document.getElementById("transbox");
     for(count; count<endCount; count++){
         let div = document.createElement("div");
@@ -79,11 +96,8 @@ function populate(){
         mainDiv.parentNode.insertBefore(div,mainDiv.nextSibling);
 
         let d = new Date(weathData.daily.data[count].time *1000); 
-        let timeText = d.toLocaleTimeString([], {hour: '2-digit'});
+        setImage(imgIcon, weathData.daily.data[count].icon.trim());
 
-        var timestamp = Number(new Date()) //1479895361931
-
-        var date = new Date(timestamp)
 
         let str = d.toDateString();
         let lastIndex = str.lastIndexOf(" ");
@@ -99,24 +113,6 @@ function populate(){
         hDay.innerHTML=words[0];
         hDate.innerHTML=words[1] + " "+ words[2];
 
-        if(weathData.daily.data[count].icon.trim()==="partly-cloudy-day"){
-            imgIcon.src="img/svg/wi-day-cloudy.svg";
-        }
-        else if(weathData.daily.data[count].icon.trim()==="partly-cloudy-night"){
-            imgIcon.src="img/svg/wi-night-cloudy.svg";
-        }
-        else if(weathData.daily.data[count].icon.trim()==="clear-day"){
-            imgIcon.src="img/svg/wi-day-sunny.svg";
-        }
-        else if(weathData.daily.data[count].icon.trim()==="wind"){
-            imgIcon.src="img/svg/wi-windy.svg";
-        }
-        else if(weathData.daily.data[count].icon.trim()==="rain"){
-            imgIcon.src="img/svg/wi-rain.svg";
-        }
-        else if(weathData.daily.data[count].icon.trim()==="cloudy"){
-            imgIcon.src="img/svg/wi-cloud.svg";
-        }
 
         imgIcon.style.alignContent="center";
         imgIcon.style.marginTop = "-30px";
@@ -148,6 +144,38 @@ function populate(){
     endCount = endCount + 5;
 }
 
-function subWeek(){
-    window.open ('week.html','_self',false)
+function subDaily(){
+    localStorage.setItem("searchParam",searchInput);
+    window.open ('daily.html','_self',false)
+}
+
+function home(){
+    window.open ('index.html','_self',false)
+}
+
+function setImage(imgIcon, dat){
+    if(dat==="partly-cloudy-day"){
+        imgIcon.src="img/svg/wi-day-cloudy.svg";
+    }
+    else if(dat==="partly-cloudy-night"){
+        imgIcon.src="img/svg/wi-night-cloudy.svg";
+    }
+    else if(dat==="clear-day"){
+        imgIcon.src="img/svg/wi-day-sunny.svg";
+    }
+    else if(dat==="wind"){
+        imgIcon.src="img/svg/wi-windy.svg";
+    }
+    else if(dat==="rain"){
+        imgIcon.src="img/svg/wi-rain.svg";
+    }
+    else if(dat==="cloudy"){
+        imgIcon.src="img/svg/wi-cloud.svg";
+    }
+    else if(dat==="clear-night"){
+        imgIcon.src="img/svg/wi-night-clear.svg";
+    }
+    else if(dat==="fog"){
+        imgIcon.src="img/svg/wi-fog.svg";
+    }
 }

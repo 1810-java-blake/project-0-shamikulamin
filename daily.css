@@ -13,7 +13,7 @@ body {
 
 #rectBox{
      position: absolute; 
-    height: 80%;
+    height: 65%;
     width: 20%;
     background-color:#141414;
     box-shadow: #141414;
@@ -67,5 +67,12 @@ button:hover {
     margin-left: 1%;
     z-index: 2;
     margin-top: 28%;
+}
+#homeBtn{
+    position: absolute;
+    z-index: 2;
+    margin-top: -2%;
+    width: 20%;
+    height: 5%;
 }
 

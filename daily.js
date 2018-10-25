@@ -62,6 +62,23 @@ function getWeather(data){
 }
 
 function populate(){
+    let rect = document.getElementById("rectBox");
+    let summary = document.createElement("h2");
+    let summaryText = document.createElement("h3");
+    summary.style.textAlign = "center";
+    summaryText.style.textAlign = "center";
+    summary.innerHTML = "Day Summary";
+    summaryText.innerHTML = weathData.hourly.summary;
+    let imgIcon = document.createElement("img");
+    
+    setImage(imgIcon, weathData.hourly.icon);
+    imgIcon.style.width = "70%";
+    imgIcon.style.margin = "auto";
+    imgIcon.style.display = "block";
+    rect.appendChild(summary);
+    rect.appendChild(imgIcon);
+    rect.appendChild(summaryText);
+
     let mainDiv= document.getElementById("transbox");
     for(count; count<endCount; count++){
         let div = document.createElement("div");
@@ -92,24 +109,10 @@ function populate(){
         hTime.style.textAlign="center";
         div.appendChild(hTime);
         hTime.innerHTML=timeText;
-        if(weathData.daily.data[count].icon.trim()==="partly-cloudy-day"){
-            imgIcon.src="img/svg/wi-day-cloudy.svg";
-        }
-        else if(weathData.daily.data[count].icon.trim()==="partly-cloudy-night"){
-            imgIcon.src="img/svg/wi-night-cloudy.svg";
-        }
-        else if(weathData.daily.data[count].icon.trim()==="clear-day"){
-            imgIcon.src="img/svg/wi-day-sunny.svg";
-        }
-        else if(weathData.daily.data[count].icon.trim()==="wind"){
-            imgIcon.src="img/svg/wi-windy.svg";
-        }
-        else if(weathData.daily.data[count].icon.trim()==="rain"){
-            imgIcon.src="img/svg/wi-rain.svg";
-        }
-        else if(weathData.daily.data[count].icon.trim()==="cloudy"){
-            imgIcon.src="img/svg/wi-cloud.svg";
-        }
+
+        setImage(imgIcon, weathData.hourly.data[count].icon.trim())
+
+    
 
         imgIcon.style.alignContent="center";
         div.appendChild(imgIcon);
@@ -124,11 +127,11 @@ function populate(){
 
         precip.style.textAlign = "center";
         div.appendChild(precip);
-        precip.innerHTML ="Precipitation: " + weathData.hourly.data[count].precipProbability*100 +"%";
+        precip.innerHTML ="Precipitation: " + Math.trunc(weathData.hourly.data[count].precipProbability*100) +"%";
 
         humid.style.textAlign = "center";
         div.appendChild(humid);
-        humid.innerHTML ="Humidity: " + weathData.hourly.data[count].humidity*100 +"%";
+        humid.innerHTML ="Humidity: " + Math.trunc(weathData.hourly.data[count].humidity*100) +"%";
 
     }
     endCount = endCount + 5;
@@ -136,4 +139,35 @@ function populate(){
 
 function subWeek(){
     window.open ('week.html','_self',false)
+}
+
+function home(){
+    window.open ('index.html','_self',false)
+}
+
+function setImage(imgIcon, dat){
+    if(dat==="partly-cloudy-day"){
+        imgIcon.src="img/svg/wi-day-cloudy.svg";
+    }
+    else if(dat==="partly-cloudy-night"){
+        imgIcon.src="img/svg/wi-night-cloudy.svg";
+    }
+    else if(dat==="clear-day"){
+        imgIcon.src="img/svg/wi-day-sunny.svg";
+    }
+    else if(dat==="wind"){
+        imgIcon.src="img/svg/wi-windy.svg";
+    }
+    else if(dat==="rain"){
+        imgIcon.src="img/svg/wi-rain.svg";
+    }
+    else if(dat==="cloudy"){
+        imgIcon.src="img/svg/wi-cloud.svg";
+    }
+    else if(dat==="clear-night"){
+        imgIcon.src="img/svg/wi-night-clear.svg";
+    }
+    else if(dat==="fog"){
+        imgIcon.src="img/svg/wi-fog.svg";
+    }
 }
