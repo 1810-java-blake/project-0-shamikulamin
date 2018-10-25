@@ -28,23 +28,8 @@ function getWeather(data){
         console.log(weathDat);
         weathData = weathDat;
         let titleEd = document.getElementById("headline");
-      //  console.log("Weekly Forecast For: " + data[0].address.city +", "+ data[0].address.state);
-        titleEd.innerHTML = "7-Day Forecast For: " + data[0].formatted_address;  // Add day summary
+        titleEd.innerHTML = "7-Day Forecast For: " + data[0].formatted_address; 
         populate();
-        
-
-        
-
-      /*  let temp = document.getElementById("temp-fahrenheit hidden");
-        let cond = document.getElementById("weather-condition");
-        let time = document.getElementById("local-time");
-        console.log(data);
-        temp.innerHTML=Math.trunc(data.currently.apparenttemperatureHigh)+"°F";
-        cond.innerHTML= data.currently.summary;
-        setIcon(data.currently.summary);
-        var d = new Date(data.currently.time*1000); // The 0 there is the key, which sets the date to the epoch
-        console.log(d.toLocaleTimeString());
-        time.innerHTML = d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});*/
         
     })
     .catch(err => console.log(err));
@@ -178,4 +163,7 @@ function setImage(imgIcon, dat){
     else if(dat==="fog"){
         imgIcon.src="img/svg/wi-fog.svg";
     }
+    else if(dat==="snow"){
+		imgIcon.src="img/svg/wi-snow.svg";
+	}
 }
